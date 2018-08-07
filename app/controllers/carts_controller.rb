@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :cart_owner?, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
   # GET /carts
@@ -62,6 +63,10 @@ class CartsController < ApplicationController
   end
 
   private
+
+  def cart_owner?
+    redirect_to store_index_url, notice: 'This is not your cart' unless @cart.id = session[:cart_id]
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_cart

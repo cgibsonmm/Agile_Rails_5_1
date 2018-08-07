@@ -28,6 +28,16 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should display cart correctly when new item is added' do
+    post line_items_url, params: { product_id: products(:one).id }
+    follow_redirect!
+    assert_select 'td.quantity', '1'
+
+    post line_items_url, params: { product_id: products(:one).id }
+    follow_redirect!
+    assert_select 'td.quantity', '2'
+  end
+
   test "should get edit" do
     get edit_cart_url(@cart)
     assert_response :success
