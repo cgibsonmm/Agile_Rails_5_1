@@ -13,6 +13,8 @@
         <td class="delete"><%= button_to 'Remove item from cart', line_item, method: :delete %></td>
       </tr>
     <% end %>
+
+    <%= render(@cart.line_items) %>
     <tfoot>
       <tr>
         <th colspan="2">Total</th>
